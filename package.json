@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "postversion": "npm run affected:build",
-    "publish:libs": "lerna publish"
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
@@ -17,11 +16,13 @@
     "isomorphic-unfetch": "^3.1.0",
     "key-did-provider-ed25519": "^2.0.1",
     "key-did-resolver": "^2.1.0",
-    "lerna": "^5.5.0",
     "socket.io-client": "^4.5.2",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "@jscutlery/semver": "^2.27.0",
     "@nrwl/cli": "14.6.3",
     "@nrwl/eslint-plugin-nx": "14.6.3",
     "@nrwl/jest": "14.6.3",
@@ -36,6 +37,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
+    "husky": "^8.0.0",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "nx": "14.6.3",
@@ -43,10 +45,5 @@
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "~4.7.2"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }

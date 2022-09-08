@@ -1,9 +1,5 @@
 {
   "name": "@surfdb/client-sdk",
   "version": "0.0.2",
-  "type": "commonjs",
-  "publishConfig": {
-    "access": "public",
-    "directory": "../../dist/packages/client-sdk"
-  }
+  "type": "commonjs"
 }
