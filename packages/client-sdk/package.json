@@ -1,5 +1,8 @@
 {
   "name": "@surfdb/client-sdk",
   "version": "0.0.2",
-  "type": "commonjs"
+  "type": "commonjs",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }
