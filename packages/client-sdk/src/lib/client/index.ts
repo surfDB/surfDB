@@ -23,7 +23,6 @@ export class SurfClient {
     method,
     body,
   }: ServerFetchOpts): Promise<any> {
-    console.log('acookie', this._siweCookie);
     const res = await axios({
       method,
       url: `${this._client}/${path}`,
@@ -64,12 +63,18 @@ export class SurfClient {
   public async update<T>(
     schema: string,
     id: number,
-    data: T
+    data: T,
+    accessCondition?: number,
+    entityAddress?: string
   ): Promise<UpdateResponse> {
     return await this._serverFetch({
       path: `data/${schema}/${id}`,
       method: 'PATCH',
-      body: data as any,
+      body: {
+        ...data,
+        accessCondition,
+        entityAddress,
+      },
     });
   }
 
@@ -78,8 +83,6 @@ export class SurfClient {
       credentials: 'include',
     });
     this._siweCookie = res.headers.get('set-cookie') || '';
-    // set _data
-    console.log('cookie', this._siweCookie);
     return await res.text();
   }
 
