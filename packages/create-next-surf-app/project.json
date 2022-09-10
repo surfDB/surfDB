@@ -9,6 +9,18 @@
         "command": "ncc build ./packages/create-next-surf-app/index.ts -w -o ./dist/packages/create-next-surf-app"
       }
     },
+    "prerelease": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rimraf ./dist/packages/create-next-surf-app"
+      }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ncc build ./packages/create-next-surf-app/index.ts -o ./dist/packages/create-next-surf-app --minify --no-cache --no-source-map-register"
+      }
+    },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
