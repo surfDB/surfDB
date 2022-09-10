@@ -1,6 +1,6 @@
-// pages/api/auth/login.ts
+/* eslint-disable no-case-declarations */
+// pages/api/auth/me.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import getConfig from 'next/config';
 import { surfClient } from '../../../lib/surfClient';
 
 export default async function handler(
@@ -9,21 +9,14 @@ export default async function handler(
 ) {
   const { method } = req;
   switch (method) {
-    case 'POST':
-      res.status(200).json(
-        await surfClient.create(req, res, {
-          schema: 'test',
-          data: req.body,
-        })
-      );
-      break;
     case 'GET':
-      res.status(200).json(
-        (await surfClient.getAll(req, res, {
-          schema: 'test',
-        })) as any
-      );
-      break;
+      // get surfdb-session cookie
+      const cookie = req.headers.cookie;
+      if (!cookie) {
+        return res.status(401).json('Unauthorized');
+      }
+      const profile = await surfClient.getProfile(req, res);
+      return res.status(200).json(profile);
     default:
       res.setHeader('Allow', ['GET']);
       res.status(405).end(`Method ${method} Not Allowed`);

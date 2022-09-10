@@ -3,7 +3,7 @@
   "sourceRoot": "packages/create-next-surf-app/src",
   "projectType": "library",
   "targets": {
-    "build": {
+    "dev": {
       "executor": "nx:run-commands",
       "options": {
         "command": "ncc build ./packages/create-next-surf-app/index.ts -w -o ./dist/packages/create-next-surf-app"
@@ -15,10 +15,21 @@
         "command": "rimraf ./dist/packages/create-next-surf-app"
       }
     },
-    "release": {
+    "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "ncc build ./packages/create-next-surf-app/index.ts -o ./dist/packages/create-next-surf-app --minify --no-cache --no-source-map-register"
+        "commands": [
+          "ncc build ./packages/create-next-surf-app/index.ts -o ./dist/packages/create-next-surf-app --minify --no-cache --no-source-map-register",
+          "cp ./packages/create-next-surf-app/package.json ./dist/packages/create-next-surf-app/package.json",
+          "cp ./packages/create-next-surf-app/README.md ./dist/packages/create-next-surf-app/README.md"
+        ]
+      }
+    },
+    "deploy": {
+      "builder": "ngx-deploy-npm:deploy",
+      "dependsOn": ["release"],
+      "options": {
+        "access": "public"
       }
     },
     "publish": {
@@ -29,7 +40,7 @@
       "dependsOn": [
         {
           "projects": "self",
-          "target": "build"
+          "target": "release"
         }
       ]
     },

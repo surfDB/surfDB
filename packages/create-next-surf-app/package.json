@@ -1,4 +1,21 @@
 {
-  "name": "@surfdb/create-next-surf-app",
-  "version": "0.0.1"
+  "name": "create-next-surf-app",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/surfDB/surfDB/tree/main/packages/create-next-surf-app"
+  },
+  "license": "MIT",
+  "keywords": [
+    "nextjs",
+    "surfDB",
+    "ceramic",
+    "SIWE",
+    "DAO",
+    "decentralized",
+    "web",
+    "app",
+    "template"
+  ],
+  "homepage": "https://docs.surfdb.xyz/"
 }

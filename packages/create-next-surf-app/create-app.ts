@@ -1,20 +1,20 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import chalk from "chalk";
-import cpy from "cpy";
-import fs from "fs";
-import os from "os";
-import path from "path";
-import { makeDir } from "./helpers/make-dir";
-import { tryGitInit } from "./helpers/git";
-import { install } from "./helpers/install";
-import { isFolderEmpty } from "./helpers/is-folder-empty";
-import { getOnline } from "./helpers/is-online";
-import { isWriteable } from "./helpers/is-writeable";
-import type { PackageManager } from "./helpers/get-pkg-manager";
+import chalk from 'chalk';
+import cpy from 'cpy';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import { makeDir } from './helpers/make-dir';
+import { tryGitInit } from './helpers/git';
+import { install } from './helpers/install';
+import { isFolderEmpty } from './helpers/is-folder-empty';
+import { getOnline } from './helpers/is-online';
+import { isWriteable } from './helpers/is-writeable';
+import type { PackageManager } from './helpers/get-pkg-manager';
 
 export class DownloadError extends Error {}
 
-type CSSLibrary = "tailwind" | "chakra-ui";
+type CSSLibrary = 'tailwind' | 'chakra-ui';
 
 export async function createApp({
   appPath,
@@ -24,14 +24,14 @@ export async function createApp({
   packageManager: PackageManager;
 }): Promise<void> {
   const root = path.resolve(appPath);
-  const template = "default";
+  const template = 'default';
 
   if (!(await isWriteable(path.dirname(root)))) {
     console.error(
-      "The application path is not writable, please check folder permissions and try again."
+      'The application path is not writable, please check folder permissions and try again.'
     );
     console.error(
-      "It is likely you do not have write permissions for this folder."
+      'It is likely you do not have write permissions for this folder.'
     );
     process.exit(1);
   }
@@ -43,7 +43,7 @@ export async function createApp({
     process.exit(1);
   }
 
-  const useYarn = packageManager === "yarn";
+  const useYarn = packageManager === 'yarn';
   const isOnline = !useYarn || (await getOnline());
   const originalDirectory = process.cwd();
 
@@ -62,20 +62,20 @@ export async function createApp({
    */
   const packageJson = {
     name: appName,
-    version: "0.1.0",
+    version: '0.1.0',
     private: true,
     scripts: {
-      dev: "next dev",
-      build: "next build",
-      start: "next start",
-      lint: "next lint",
+      dev: 'next dev',
+      build: 'next build',
+      start: 'next start',
+      lint: 'next lint',
     },
   };
   /**
    * Write it to disk.
    */
   fs.writeFileSync(
-    path.join(root, "package.json"),
+    path.join(root, 'package.json'),
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
   /**
@@ -84,29 +84,25 @@ export async function createApp({
   const installFlags = { packageManager, isOnline };
 
   const dependencies = [
-    "react@^18",
-    "react-dom@^18",
-    "next",
-    "wagmi",
-    "ethers",
-    "@rainbow-me/rainbowkit",
-    "@surfdb/client-sdk",
-    "axios",
-    "siwe",
-    "socket.io-client",
+    'react@^18',
+    'react-dom@^18',
+    'next',
+    'wagmi',
+    'ethers',
+    '@rainbow-me/rainbowkit',
+    '@surfdb/client-sdk',
   ];
 
   /**
    * Default devDependencies.
    */
   const devDependencies = [
-    "eslint",
-    "eslint-config-next",
-    "typescript",
-    "@types/react",
-    "@types/node",
-    "@types/react-dom",
-    "tslib",
+    'eslint',
+    'eslint-config-next',
+    'typescript',
+    '@types/react',
+    '@types/node',
+    '@types/react-dom',
   ];
 
   /**
@@ -114,7 +110,7 @@ export async function createApp({
    */
   if (dependencies.length) {
     console.log();
-    console.log("Installing dependencies:");
+    console.log('Installing dependencies:');
     for (const dependency of dependencies) {
       console.log(`- ${chalk.cyan(dependency)}`);
     }
@@ -127,7 +123,7 @@ export async function createApp({
    */
   if (devDependencies.length) {
     console.log();
-    console.log("Installing devDependencies:");
+    console.log('Installing devDependencies:');
     for (const devDependency of devDependencies) {
       console.log(`- ${chalk.cyan(devDependency)}`);
     }
@@ -140,20 +136,20 @@ export async function createApp({
   /**
    * Copy the template files to the target directory.
    */
-  await cpy("**", root, {
+  await cpy('**', root, {
     parents: true,
-    cwd: path.join(__dirname, "templates", template),
+    cwd: path.join(__dirname, 'templates', template),
     rename: (name) => {
       switch (name) {
-        case "env.example":
-        case "gitignore":
-        case "eslintrc.json": {
-          return ".".concat(name);
+        case 'env.example':
+        case 'gitignore':
+        case 'eslintrc.json': {
+          return '.'.concat(name);
         }
         // README.md is ignored by webpack-asset-relocator-loader used by ncc:
         // https://github.com/vercel/webpack-asset-relocator-loader/blob/e9308683d47ff507253e37c9bcbb99474603192b/src/asset-relocator.js#L227
-        case "README-template.md": {
-          return "README.md";
+        case 'README-template.md': {
+          return 'README.md';
         }
         default: {
           return name;
@@ -163,7 +159,7 @@ export async function createApp({
   });
 
   if (tryGitInit(root)) {
-    console.log("Initialized a git repository.");
+    console.log('Initialized a git repository.');
     console.log();
   }
 
@@ -174,23 +170,23 @@ export async function createApp({
     cdpath = appPath;
   }
 
-  console.log(`${chalk.green("Success!")} Created ${appName} at ${appPath}`);
-  console.log("Inside that directory, you can run several commands:");
+  console.log(`${chalk.green('Success!')} Created ${appName} at ${appPath}`);
+  console.log('Inside that directory, you can run several commands:');
   console.log();
-  console.log(chalk.cyan(`  ${packageManager} ${useYarn ? "" : "run "}dev`));
-  console.log("    Starts the development server.");
+  console.log(chalk.cyan(`  ${packageManager} ${useYarn ? '' : 'run '}dev`));
+  console.log('    Starts the development server.');
   console.log();
-  console.log(chalk.cyan(`  ${packageManager} ${useYarn ? "" : "run "}build`));
-  console.log("    Builds the app for production.");
+  console.log(chalk.cyan(`  ${packageManager} ${useYarn ? '' : 'run '}build`));
+  console.log('    Builds the app for production.');
   console.log();
   console.log(chalk.cyan(`  ${packageManager} start`));
-  console.log("    Runs the built app in production mode.");
+  console.log('    Runs the built app in production mode.');
   console.log();
-  console.log("We suggest that you begin by typing:");
+  console.log('We suggest that you begin by typing:');
   console.log();
-  console.log(chalk.cyan("  cd"), cdpath);
+  console.log(chalk.cyan('  cd'), cdpath);
   console.log(
-    `  ${chalk.cyan(`${packageManager} ${useYarn ? "" : "run "}dev`)}`
+    `  ${chalk.cyan(`${packageManager} ${useYarn ? '' : 'run '}dev`)}`
   );
   console.log();
 }

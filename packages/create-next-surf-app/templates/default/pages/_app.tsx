@@ -49,7 +49,9 @@ const wagmiClient = createClient({
 function MyApp({ Component, pageProps }: AppProps) {
   const [authenticationStatus, setAuthenticationStatus] = useState<
     'loading' | 'authenticated' | 'unauthenticated'
-  >('unauthenticated');
+  >('loading');
+
+  const [user, setUser] = useState(null);
 
   const authenticationAdapter = createAuthenticationAdapter({
     getNonce: async () => {
@@ -91,10 +93,23 @@ function MyApp({ Component, pageProps }: AppProps) {
       return Boolean(verifyRes.ok);
     },
     signOut: async () => {
-      await fetch('/api/auth/logout');
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+      });
       setAuthenticationStatus('unauthenticated');
     },
   });
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('/api/auth/me');
+      const user = await res.json();
+      console.log({ user });
+      setAuthenticationStatus(
+        user.address ? 'authenticated' : 'unauthenticated'
+      );
+    })();
+  }, []);
 
   return (
     <WagmiConfig client={wagmiClient}>
