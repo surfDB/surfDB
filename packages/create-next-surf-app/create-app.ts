@@ -91,6 +91,7 @@ export async function createApp({
     'ethers',
     '@rainbow-me/rainbowkit',
     '@surfdb/client-sdk',
+    'siwe',
   ];
 
   /**

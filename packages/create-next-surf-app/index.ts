@@ -1,32 +1,32 @@
 #!/usr/bin/env node
 /* eslint-disable import/no-extraneous-dependencies */
-import chalk from "chalk";
-import Commander from "commander";
-import path from "path";
-import prompts from "prompts";
-import checkForUpdate from "update-check";
-import { createApp, DownloadError } from "./create-app";
-import { getPkgManager } from "./helpers/get-pkg-manager";
-import { validateNpmName } from "./helpers/validate-pkg";
-import packageJson from "./package.json";
+import chalk from 'chalk';
+import Commander from 'commander';
+import path from 'path';
+import prompts from 'prompts';
+import checkForUpdate from 'update-check';
+import { createApp, DownloadError } from './create-app';
+import { getPkgManager } from './helpers/get-pkg-manager';
+import { validateNpmName } from './helpers/validate-pkg';
+import packageJson from './package.json';
 
-let projectPath: string = "";
+let projectPath: string = '';
 
 const program = new Commander.Command(packageJson.name)
   .version(packageJson.version)
-  .arguments("<project-directory>")
-  .usage(`${chalk.green("<project-directory>")} [options]`)
+  .arguments('<project-directory>')
+  .usage(`${chalk.green('<project-directory>')} [options]`)
   .action((name) => {
     projectPath = name;
   })
   .option(
-    "--use-npm",
+    '--use-npm',
     `
   Explicitly tell the CLI to bootstrap the app using npm
 `
   )
   .option(
-    "--use-pnpm",
+    '--use-pnpm',
     `
   Explicitly tell the CLI to bootstrap the app using pnpm
 `
@@ -34,39 +34,39 @@ const program = new Commander.Command(packageJson.name)
   .parse(process.argv);
 
 async function run(): Promise<void> {
-  if (typeof projectPath === "string") {
+  if (typeof projectPath === 'string') {
     projectPath = projectPath.trim();
   }
   if (!projectPath) {
     const res = await prompts({
-      type: "text",
-      name: "path",
-      message: "What is your project named?",
-      initial: "my-app",
+      type: 'text',
+      name: 'path',
+      message: 'What is your project named?',
+      initial: 'my-app',
       validate: (name) => {
         const validation = validateNpmName(path.basename(path.resolve(name)));
         if (validation.valid) {
           return true;
         }
-        return "Invalid project name: " + validation.problems![0];
+        return 'Invalid project name: ' + validation.problems![0];
       },
     });
 
-    if (typeof res.path === "string") {
+    if (typeof res.path === 'string') {
       projectPath = res.path.trim();
     }
   }
 
   if (!projectPath) {
     console.log();
-    console.log("Please specify the project directory:");
+    console.log('Please specify the project directory:');
     console.log(
-      `  ${chalk.cyan(program.name())} ${chalk.green("<project-directory>")}`
+      `  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`
     );
     console.log();
-    console.log("For example:");
+    console.log('For example:');
     console.log(
-      `  ${chalk.cyan(program.name())} ${chalk.green("my-next-app")}`
+      `  ${chalk.cyan(program.name())} ${chalk.green('my-next-app')}`
     );
     console.log();
     console.log(
@@ -87,16 +87,16 @@ async function run(): Promise<void> {
     );
 
     problems!.forEach((p: any) =>
-      console.error(`    ${chalk.red.bold("*")} ${p}`)
+      console.error(`    ${chalk.red.bold('*')} ${p}`)
     );
     process.exit(1);
   }
 
   const packageManager = !!program.useNpm
-    ? "npm"
+    ? 'npm'
     : !!program.usePnpm
-    ? "pnpm"
-    : "yarn";
+    ? 'pnpm'
+    : 'yarn';
 
   try {
     await createApp({
@@ -109,8 +109,8 @@ async function run(): Promise<void> {
     }
 
     const res = await prompts({
-      type: "confirm",
-      name: "builtin",
+      type: 'confirm',
+      name: 'builtin',
       message:
         `Could not download because of a connectivity issue between your machine and GitHub.\n` +
         `Do you want to use the default template instead?`,
@@ -138,15 +138,15 @@ async function notifyUpdate(): Promise<void> {
       console.log();
       console.log(
         chalk.yellow.bold(
-          "A new version of `create-web3-frontend` is available!"
+          'A new version of `create-next-surf-app` is available!'
         )
       );
       console.log(
-        "You can update by running: " +
+        'You can update by running: ' +
           chalk.cyan(
-            pkgManager === "yarn"
-              ? "yarn global add create-web3-frontend"
-              : `${pkgManager} install --global create-web3-frontend`
+            pkgManager === 'yarn'
+              ? 'yarn global create-next-surf-app'
+              : `${pkgManager} install --global create-next-surf-app`
           )
       );
       console.log();
@@ -161,11 +161,11 @@ run()
   .then(notifyUpdate)
   .catch(async (reason) => {
     console.log();
-    console.log("Aborting installation.");
+    console.log('Aborting installation.');
     if (reason.command) {
       console.log(`  ${chalk.cyan(reason.command)} has failed.`);
     } else {
-      console.log(chalk.red("Unexpected error. Please report it as a bug:"));
+      console.log(chalk.red('Unexpected error. Please report it as a bug:'));
       console.log(reason);
     }
     console.log();
