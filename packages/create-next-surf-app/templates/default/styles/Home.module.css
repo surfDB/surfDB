@@ -1,5 +1,7 @@
 .container {
   padding: 0 2rem;
+  background-color: #1a1a1a;
+  color: #ccc;
 }
 
 .main {
@@ -99,4 +101,27 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.button {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-align: left;
+  color: #1a1a1a;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  max-width: 350px;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+  color: #0d76fc;
+  border-color: #0d76fc;
 }
