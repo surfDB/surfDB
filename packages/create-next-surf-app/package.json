@@ -17,5 +17,6 @@
     "app",
     "template"
   ],
-  "homepage": "https://docs.surfdb.xyz/"
+  "homepage": "https://docs.surfdb.xyz/",
+  "bin": "./index.js"
 }
