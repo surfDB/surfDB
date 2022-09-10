@@ -1,3 +1,6 @@
+export type RequestType = IncomingMessage | Request;
+export type ResponseType = ServerResponse | Response;
+
 export interface ClientOpts {
   client: string;
 }
@@ -8,8 +11,8 @@ export interface ServerFetchOpts {
   body?: object;
 }
 
-export interface CreateResponse<T> {
-  id: string;
+export interface CreateResponse {
+  _id: string;
   createdAt: string;
   updatedAt: string;
   schemaName: string;
@@ -17,18 +20,16 @@ export interface CreateResponse<T> {
   accessCondition: number;
   accessAddress: string;
   encryptedSymmetricKey: string;
-  data: T;
 }
 
-export interface GetResponse<T> {
+export type GetResponse<T> = T & {
   id: string;
   createdAt: string;
   updatedAt: string;
   schemaName: string;
   streamId: string;
   accessAddress: string;
-  data: T;
-}
+};
 
 export interface UpdateResponse {
   id: string;
@@ -52,4 +53,14 @@ export interface AuthSig {
 
 export interface AuthResponse {
   ok: boolean;
+}
+
+export interface Profile {
+  address: string;
+  createdAt: string;
+  message: string;
+  signature: string;
+  updatedAt: string;
+  username: string;
+  _id: string;
 }

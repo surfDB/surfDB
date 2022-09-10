@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   AuthResponse,
   ClientOpts,
@@ -6,16 +7,18 @@ import {
   ServerFetchOpts,
   UpdateResponse,
   AuthSig,
+  RequestType,
+  ResponseType,
+  Profile,
 } from '../../../index';
 
-import axios from 'axios';
-
+import axios, { AxiosResponse } from 'axios';
+import { addToCookies, deleteCookie, getCookie } from '../../utils';
 export class SurfClient {
   private _client: string;
-  private _siweCookie: string;
+  private _cookie: string | undefined;
   constructor({ client }: ClientOpts) {
     this._client = client;
-    this._siweCookie = '';
   }
 
   private async _serverFetch({
@@ -29,68 +32,126 @@ export class SurfClient {
       data: body,
       headers: {
         'Content-Type': 'application/json',
-        Cookie: this._siweCookie,
+        Cookie: this._cookie || '',
       },
     });
-    if (res.headers['set-cookie']) {
-      this._siweCookie = res.headers['set-cookie'][0];
-    }
     return res;
   }
 
-  public async create<T>(schema: string, data: T): Promise<CreateResponse<T>> {
-    return await this._serverFetch({
-      path: `data/${schema}`,
+  public async create<T>(
+    req: RequestType,
+    res: ResponseType,
+    options: { schema: string; data: T }
+  ): Promise<CreateResponse> {
+    this._cookie = getCookie(req);
+    const axiosRes = await this._serverFetch({
+      path: `data/${options.schema}`,
       method: 'POST',
-      body: data as any,
+      body: options.data as any,
     });
+    return axiosRes.data;
   }
 
-  public async getAll<T>(schema: string): Promise<GetResponse<T>[]> {
-    return await this._serverFetch({
-      path: `data/${schema}`,
+  public async getAll<T>(
+    req: RequestType,
+    res: ResponseType,
+    options: { schema: string }
+  ): Promise<GetResponse<T>[]> {
+    this._cookie = getCookie(req);
+    const axiosRes = await this._serverFetch({
+      path: `data/${options.schema}`,
       method: 'GET',
     });
+    return axiosRes.data;
   }
 
-  public async get<T>(schema: string, id: number): Promise<GetResponse<T>> {
-    return await this._serverFetch({
-      path: `data/${schema}/${id}`,
+  public async get<T>(
+    req: RequestType,
+    res: ResponseType,
+    options: { schema: string; id: number }
+  ): Promise<GetResponse<T>> {
+    this._cookie = getCookie(req);
+    const axiosRes = await this._serverFetch({
+      path: `data/${options.schema}/${options.id}`,
       method: 'GET',
     });
+    return axiosRes.data;
   }
 
   public async update<T>(
-    schema: string,
-    id: number,
-    data: T,
-    accessCondition?: number,
-    entityAddress?: string
+    req: RequestType,
+    res: ResponseType,
+    options: {
+      schema: string;
+      id: number;
+      data: T;
+      accessCondition?: number;
+      entityAddress?: string;
+    }
   ): Promise<UpdateResponse> {
-    return await this._serverFetch({
-      path: `data/${schema}/${id}`,
+    this._cookie = getCookie(req);
+    const axiosRes = await this._serverFetch({
+      path: `data/${options.schema}/${options.id}`,
       method: 'PATCH',
       body: {
-        ...data,
-        accessCondition,
-        entityAddress,
+        ...options.data,
+        accessCondition: options.accessCondition,
+        entityAddress: options.entityAddress,
       },
     });
+    return axiosRes.data;
   }
 
-  public async getAuthNonce(): Promise<string> {
-    const res = await fetch(`${this._client}/user/nonce`, {
+  public async getAuthNonce(
+    req: RequestType,
+    res: ResponseType
+  ): Promise<string> {
+    const nonce = await fetch(`${this._client}/user/nonce`, {
       credentials: 'include',
     });
-    this._siweCookie = res.headers.get('set-cookie') || '';
-    return await res.text();
+    addToCookies(nonce.headers.get('set-cookie') as string, res);
+    return await nonce.text();
   }
 
-  public async authenticate(authSig: AuthSig): Promise<AuthResponse> {
-    return await this._serverFetch({
+  public async authenticate(
+    req: RequestType,
+    res: ResponseType,
+    options: {
+      authSig: AuthSig;
+    }
+  ): Promise<AuthResponse> {
+    this._cookie = getCookie(req);
+    const resp: AxiosResponse = await this._serverFetch({
       path: 'user/login',
       method: 'POST',
-      body: authSig,
+      body: options.authSig,
     });
+    if (resp.headers['set-cookie']) {
+      addToCookies(resp.headers['set-cookie'][0], res);
+    }
+    return resp.data;
+  }
+
+  public async getProfile(
+    req: RequestType,
+    res: ResponseType
+  ): Promise<Profile> {
+    this._cookie = getCookie(req);
+    const resp = await this._serverFetch({
+      path: 'user/me',
+      method: 'GET',
+    });
+    return resp.data;
+  }
+
+  public async logout(req: RequestType, res: ResponseType): Promise<void> {
+    this._cookie = getCookie(req);
+    const resp = await this._serverFetch({
+      path: 'user/logout',
+      method: 'POST',
+    });
+    deleteCookie(res);
+    this._cookie = undefined;
+    return resp.data;
   }
 }

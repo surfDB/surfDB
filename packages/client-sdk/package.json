@@ -4,5 +4,8 @@
   "type": "commonjs",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.16"
   }
 }

@@ -10,7 +10,8 @@
         "outputPath": "dist/packages/client-sdk",
         "main": "packages/client-sdk/src/index.ts",
         "tsConfig": "packages/client-sdk/tsconfig.lib.json",
-        "assets": ["packages/client-sdk/*.md"]
+        "assets": ["packages/client-sdk/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {
