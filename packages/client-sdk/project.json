@@ -45,7 +45,7 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "preset": "conventional",
-        "postTargets": ["client-sdk:npm", "client-sdk:github"]
+        "postTargets": ["client-sdk:npm"]
       }
     },
     "github": {
