@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.1](https://github.com/surfDB/surfDB/compare/client-sdk-0.1.0...client-sdk-0.1.1) (2022-09-10)
+
+
+### Bug Fixes
+
+* minor fixes ([99d60c7](https://github.com/surfDB/surfDB/commit/99d60c77c298cfd926721ae31dcdeacf28371f36))
+
 ## [0.1.0](https://github.com/surfDB/surfDB/compare/client-sdk-0.0.2...client-sdk-0.1.0) (2022-09-10)
 
 
