@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/surfDB/surfDB/compare/client-sdk-0.1.1...client-sdk-0.2.0) (2022-09-18)
+
+
+### Features
+
+* encrypted sdk ([5e26d28](https://github.com/surfDB/surfDB/commit/5e26d280f5bd557b2fae17e454efe517ece4dbf3))
+
 ### [0.1.1](https://github.com/surfDB/surfDB/compare/client-sdk-0.1.0...client-sdk-0.1.1) (2022-09-10)
 
 
