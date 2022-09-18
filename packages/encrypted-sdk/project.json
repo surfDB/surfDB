@@ -10,7 +10,8 @@
         "outputPath": "dist/packages/encrypted-sdk",
         "main": "packages/encrypted-sdk/src/index.ts",
         "tsConfig": "packages/encrypted-sdk/tsconfig.lib.json",
-        "assets": ["packages/encrypted-sdk/*.md"]
+        "assets": ["packages/encrypted-sdk/*.md"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {
