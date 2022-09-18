@@ -1255,6 +1255,33 @@
     "@json-rpc-tools/types" "^1.7.6"
     "@pedrouid/environment" "^1.0.1"
 
+"@lit-protocol/sdk-browser@^1.1.225":
+  version "1.1.225"
+  resolved "https://registry.yarnpkg.com/@lit-protocol/sdk-browser/-/sdk-browser-1.1.225.tgz#0e9247ac5f377ce54b89120316f75b34728cf77f"
+  integrity sha512-dG80H48b0UOv/WEdSbiV2ZSd5qDEB3i8CkJ9mFwU3QVqNF+zSh/Oha6/NTdFsRw5USrnchvKIso6nhaIluHGPg==
+  dependencies:
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/contracts" "^5.2.0"
+    "@ethersproject/hash" "^5.4.0"
+    "@ethersproject/providers" "^5.2.0"
+    "@ethersproject/strings" "^5.5.0"
+    "@ethersproject/units" "^5.4.0"
+    "@ethersproject/wallet" "^5.2.0"
+    "@walletconnect/ethereum-provider" "^1.7.8"
+    buffer "^6.0.3"
+    bufferutil "^4.0.6"
+    cross-blob "^3.0.1"
+    jszip "^3.6.0"
+    lit-connect-modal "^0.1.8"
+    lit-siwe "^1.1.8"
+    node-fetch "^3.2.3"
+    pako "^2.0.4"
+    tslib "^2.3.1"
+    tweetnacl "^1.0.3"
+    tweetnacl-util "^0.15.1"
+    uint8arrays "^3.0.0"
+    utf-8-validate "^5.0.8"
+
 "@lit-protocol/sdk-nodejs@^1.1.216":
   version "1.1.216"
   resolved "https://registry.yarnpkg.com/@lit-protocol/sdk-nodejs/-/sdk-nodejs-1.1.216.tgz#c174857410dfd91ea311a325217590ff2a0a662d"
@@ -1797,6 +1824,11 @@
   integrity sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==
   dependencies:
     "@types/node" "*"
+
+"@types/cryptr@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/cryptr/-/cryptr-4.0.1.tgz#d4128be91d1064a2678e695a318b217912881083"
+  integrity sha512-Nn8fvr+8XYWK5h422lj4xQACfOg6vdhKI+Rh9ERa5Mg0cZvPL9Vn3845vSY07dNZnEs5cqkSNVMdhmf70lAYkA==
 
 "@types/glob@*":
   version "8.0.0"
@@ -3377,6 +3409,11 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+cryptr@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/cryptr/-/cryptr-6.0.3.tgz#669364e7993a1cd19d77e32e90ffef38455ecd74"
+  integrity sha512-Nhaxn3CYl/OoWF3JSZlF8B6FQO600RRkU3g8213OGEIq4YvMlc3od8hL9chubhY1SmTq8ienvCRq1MSFjMTpOg==
 
 cssom@^0.5.0:
   version "0.5.0"
@@ -5765,6 +5802,33 @@ lit-connect-modal@^0.1.8:
   integrity sha512-hiE/0yrl15EDNH08OqcntiNXDOvU4zviiaOOCT4jG2N3L2dyMFLOwXXrkNobQ6B8/8MgXmMJu2TCp6RwhmCzNw==
   dependencies:
     micromodal "^0.4.10"
+
+lit-js-sdk@^1.1.218:
+  version "1.1.218"
+  resolved "https://registry.yarnpkg.com/lit-js-sdk/-/lit-js-sdk-1.1.218.tgz#74b74f48e22a5fff40e6f942fef7d972fc7eff60"
+  integrity sha512-M64vAHmFshjDZ5jm7qt8PLm8sR9xKhjtnGQQIiNUdFAkNlsso5p5SiAT+jqEsfQA7/kj5RhggVfdW8oI1dG00Q==
+  dependencies:
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/contracts" "^5.2.0"
+    "@ethersproject/hash" "^5.4.0"
+    "@ethersproject/providers" "^5.2.0"
+    "@ethersproject/strings" "^5.5.0"
+    "@ethersproject/units" "^5.4.0"
+    "@ethersproject/wallet" "^5.2.0"
+    "@walletconnect/ethereum-provider" "^1.7.8"
+    buffer "^6.0.3"
+    bufferutil "^4.0.6"
+    cross-blob "^3.0.1"
+    jszip "^3.6.0"
+    lit-connect-modal "^0.1.8"
+    lit-siwe "^1.1.8"
+    node-fetch "^3.2.3"
+    pako "^2.0.4"
+    tslib "^2.3.1"
+    tweetnacl "^1.0.3"
+    tweetnacl-util "^0.15.1"
+    uint8arrays "^3.0.0"
+    utf-8-validate "^5.0.8"
 
 lit-siwe@^1.1.8:
   version "1.1.8"

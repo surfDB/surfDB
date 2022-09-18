@@ -18,7 +18,8 @@
       "@surfdb/client-sdk": ["packages/client-sdk/src/index.ts"],
       "@surfdb/create-next-surf-app": [
         "packages/create-next-surf-app/src/index.ts"
-      ]
+      ],
+      "@surfdb/encrypted-sdk": ["packages/encrypted-sdk/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

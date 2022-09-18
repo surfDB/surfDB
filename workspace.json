@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "client-sdk": "packages/client-sdk",
-    "create-next-surf-app": "packages/create-next-surf-app"
+    "create-next-surf-app": "packages/create-next-surf-app",
+    "encrypted-sdk": "packages/encrypted-sdk"
   }
 }

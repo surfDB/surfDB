@@ -55,11 +55,11 @@ export class SurfClient {
   public async getAll<T>(
     req: RequestType,
     res: ResponseType,
-    options: { schema: string }
+    options: { schema: string; accessAddress?: string }
   ): Promise<GetResponse<T>[]> {
     this._cookie = getCookie(req);
     const axiosRes = await this._serverFetch({
-      path: `data/${options.schema}`,
+      path: `data/${options.schema}?accessAddress=${options.accessAddress}`,
       method: 'GET',
     });
     return axiosRes.data;
@@ -68,7 +68,7 @@ export class SurfClient {
   public async get<T>(
     req: RequestType,
     res: ResponseType,
-    options: { schema: string; id: number }
+    options: { schema: string; id: string }
   ): Promise<GetResponse<T>> {
     this._cookie = getCookie(req);
     const axiosRes = await this._serverFetch({
@@ -83,7 +83,7 @@ export class SurfClient {
     res: ResponseType,
     options: {
       schema: string;
-      id: number;
+      id: string;
       data: T;
       accessCondition?: number;
       entityAddress?: string;
