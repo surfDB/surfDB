@@ -14,6 +14,9 @@ import {
 
 import axios, { AxiosResponse } from 'axios';
 import { addToCookies, deleteCookie, getCookie } from '../../utils';
+
+import * as FormData from 'form-data';
+
 export class SurfClient {
   private _client: string;
   private _cookie: string | undefined;
@@ -153,5 +156,31 @@ export class SurfClient {
     deleteCookie(res);
     this._cookie = undefined;
     return resp.data;
+  }
+
+  public async uploadFile<T>(
+    req: RequestType,
+    res: ResponseType,
+    options: { file: any }
+  ): Promise<any> {
+    this._cookie = getCookie(req);
+    const formData = new FormData();
+    formData.append('file', options.file);
+    const axiosRes = await axios({
+      method: 'POST',
+      url: `${this._client}/file`,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Cookie: this._cookie || '',
+      },
+    });
+    // remove port from url
+    const url = this._client.replace(/:\d+/, '');
+
+    return {
+      hash: axiosRes.data.hash,
+      url: `${url}:8080/ipfs/${axiosRes.data.hash}`,
+    };
   }
 }
